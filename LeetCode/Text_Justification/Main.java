@@ -55,8 +55,6 @@ System.out.println(words[i] + " : " + words[i].length());
             grouper = "";
         }
 
-
-
 System.out.println();
 System.out.println("Max Width:" + maxWidth);
 System.out.println("Length: " + totalLength);
