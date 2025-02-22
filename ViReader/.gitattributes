@@ -1,0 +1,2 @@
+SDL2_ttf.dll filter=lfs diff=lfs merge=lfs -text
+ViReader/src/lib/libSDL2_ttf.a filter=lfs diff=lfs merge=lfs -text
