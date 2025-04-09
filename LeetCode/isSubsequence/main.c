@@ -18,16 +18,43 @@ bool isSubsequence(char* s, char* t);
 int main(int argc,char *args[]){
 
 
+    char *s, *t;
+    s = "abc"; 
+    t = "ahbgdc";
 
-
+    printf("%d",isSubsequence(s,t));
 
     return 0;
 
 }
 
 
-bool isSubsequence(char* s, char* t){
 
 
-   return false;    
+
+
+bool isSubsequence(char* s, char* t) {
+
+    bool flag = false;
+    size_t t_len = strlen(t);
+    size_t s_len = strlen(s);
+    int s_pointer = 0;
+
+    if(strcmp(s,t) == 0){
+        return true;
+    }
+
+    for(int i = 0;i<t_len;i++){
+        if(s[s_pointer] == t[i]){
+            s_pointer++;
+        }
+
+        if(s_pointer >= s_len){
+            flag = true; 
+            break;
+        }
+
+    }
+
+    return flag;
 }
