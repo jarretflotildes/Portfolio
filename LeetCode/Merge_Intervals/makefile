@@ -5,7 +5,10 @@
 # Ideally, one target for every object file and a target for final binary. 
 
 MAIN: main.o
-	gcc -o MAIN main.o -lm
+	g++ -o MAIN main.o -lm
 
-main.o: main.c
-	gcc -c -g main.c
+main.o: main.cpp
+	g++ -c -g main.cpp
+
+clean:
+	rm -f MAIN *.o

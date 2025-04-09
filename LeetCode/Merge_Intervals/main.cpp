@@ -16,7 +16,6 @@ int main(int argc,char *args[]){
 class Solution {
     public:
         vector<vector<int>> merge(vector<vector<int>>& intervals) {
-    
             //vector<vector<int>> vec2(intervals.size(), vector<int>(2));
             vector<vector<int>> merged;
             bool lastMerged = false;
@@ -53,6 +52,6 @@ class Solution {
         
         }
     
-    };
-}
+};
+
  
