@@ -1,31 +1,43 @@
 class Solution {
     public:
-        int maxSubArray(vector<int>& nums) {
     
-            if(nums.size() == 0){
-                return 0;
+        int minSubArrayLen(int target, vector<int>& nums) {
+            int length = nums.size();
+    
+            int left = 0;
+            int sum = nums[0];
+            int runningLength = 1;
+            bool reached = false;
+    
+            if(nums[0] >= target){
+                return 1;
             }
     
-            if(nums.size() == 1){
-                return nums[0];
-            }
+            for(int right = 1;right < nums.size();right++){
+                sum += nums[right];
+                runningLength = right - left + 1;
+    cout << "sum " << sum << " in " << runningLength << endl;
     
-            int highestSum = nums[0];
-            int runningSum = 0;
-    
-            for(int i = 0;i<nums.size();i++){
-                runningSum = runningSum + nums[i];
-                if(runningSum < nums[i]){
-                    runningSum = nums[i];
+                if(sum >= target){
+                    if(runningLength <= length){
+                        length = runningLength;
+                        reached = true;
+                    }
+                    sum -= nums[left];
+                    sum -= nums[right];
+                    right--;
+                    runningLength--;
+                    left++;
                 }
-    
-                if(runningSum > highestSum){
-                    highestSum = runningSum;
-                }
-                
+           
+            }
+             
+            if(!reached){
+                length = 0;
             }
     
-            return highestSum;
+    
+            return length;
             
         }
     };
