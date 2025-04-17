@@ -1,31 +1,63 @@
 class Solution {
     public:
-        int maxSubArray(vector<int>& nums) {
+        vector<int> decrypt(vector<int>& code, int k) {
     
-            if(nums.size() == 0){
-                return 0;
-            }
+            if(k >= 0){
+                return pos(code,k);
+            } 
     
-            if(nums.size() == 1){
-                return nums[0];
-            }
+            return neg(code,k);
     
-            int highestSum = nums[0];
-            int runningSum = 0;
     
-            for(int i = 0;i<nums.size();i++){
-                runningSum = runningSum + nums[i];
-                if(runningSum < nums[i]){
-                    runningSum = nums[i];
-                }
-    
-                if(runningSum > highestSum){
-                    highestSum = runningSum;
-                }
-                
-            }
-    
-            return highestSum;
-            
         }
+    
+        vector<int> pos(vector<int> &code, int k){
+            vector<int> decrypted;
+    
+            for(int i = 0;i < code.size();i++){
+                int counting = k;
+                int j = i+1;
+                int sum = 0;
+    
+                while(counting > 0){
+                    if(j > code.size()-1){
+                        j = 0;
+                    }
+                    sum += code[j];
+                    j++;
+                    counting--;
+                }
+                decrypted.push_back(sum);
+    
+            }
+    
+            return decrypted;
+    
+        }
+    
+        vector<int> neg(vector<int> &code, int k){
+            vector<int> decrypted;
+    
+            for(int i = 0;i < code.size();i++){
+                int counting = k;
+                int j = i-1;
+                int sum = 0;
+    
+                while(counting != 0){
+                    if(j < 0){
+                        j = code.size() - 1;
+                    }
+                    sum += code[j];
+                    j--;
+                    counting++;
+                }
+                decrypted.push_back(sum);
+            }
+    
+            return decrypted;
+    
+    
+        }
+    
+    
     };
