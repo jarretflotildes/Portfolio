@@ -3,95 +3,116 @@
 #include<string.h>
 #include<math.h>
 
-char *addBinary(char *a, char *b);
-int binary_to_int(char *binary);
-char *int_to_binary(int number);
     
 int main(int argc,char *args[]){
 
-    char *a = "1";
-    char *b = "11";
-
-//    printf("%s = %d\n",a,binary_to_int(a));
-//    printf("%s = %d\n",b,binary_to_int(b));
-
-    printf("In binary this is %s\n",addBinary(a,b));
 
     return 0;
 
 }
 
-char *addBinary(char *a, char *b){
-    int num_a = binary_to_int(a);
-    int num_b = binary_to_int(b);
-    return int_to_binary(num_a+num_b);
+void println(char *string,int value){
+    printf("%s %d\n",string,value);
 }
 
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
 
-int binary_to_int(char *binary){
-    int position = strlen(binary);
-//printf("Length is %d\n",position);
-    int translated = 0; 
+    struct ListNode *l1_node = l1;
+    int l1_val = 0;
+    int l1_digits = 0;
 
-    for(int i = 0; i<position;i++){
-        if(binary[i] == '1'){
-            int number = pow((double)2,(double)position-i-1);
-            translated += number;
-//printf("%c = %d\n",binary[i],number);
+    struct ListNode *l2_node = l2;
+    int l2_val = 0;
+    int l2_digits = 0;
+
+    struct ListNode *head = (struct ListNode*) malloc(sizeof(struct ListNode));
+    struct ListNode *l3 = head;
+
+    int carry = 0;
+
+    if(l1_node != NULL && l2_node != NULL){
+        int val = l1_node->val + l2_node->val + carry;
+        if(val > 9){
+            carry = val / 10;
+            val = val%10;
         } else {
-//printf("%c = %d\n",binary[i],0);
+            carry = 0;
         }
+        l3->val = val;
+        l3->next = NULL;
+        l1_node = l1_node->next;
+        l2_node = l2_node->next;
+    } else if(l1_node != NULL){
+        l3->val = l1_node->val;
+        l3->next = NULL;
+        l1_node = l1_node->next;
+    } else if(l2_node != NULL){
+        l3->val = l2_node->val;
+        l2_node = l2_node->next;
     }
 
-    return translated;
-
-}
-
-char *int_to_binary(int number){
-    int count = 0;
-    int count2 = 0;
-    int temp = number;
-
-    while(temp > 0){
-        temp = temp/2;
-        count++;
-    }
-//    count--;
-//    char *binary = malloc(sizeof(count)*4 + 1);
-char *binary = "";
-
-    while(number > 0){
-        int temp = number;
-        char *num = malloc(sizeof(count)*4 + 1);
-        temp = temp%2;
-        if(temp == 1){
-printf("Current number is %d = 1\n",number);
-//            strcat(binary,"0");
-            strcat(num,"1");
-            strcat(num,binary);
-            binary = strdup(num);
-        } else {
-printf("Current number is %d = 0\n",number);
-//            strcat(binary,"0");
-            strcat(num,"0");
-            strcat(num,binary);
-            binary = strdup(num);
-        }
-
-        //if perfect then already done and rest is 0
-        if(number % (int)pow((double)2,(double)count)==0){
-            for(int i = count2;i<count;i++){
-               strcat(binary,"0");
+    while(l1_node != NULL || l2_node != NULL){
+        struct ListNode *node = (struct ListNode*) malloc(sizeof(struct ListNode));
+        if(l1_node != NULL && l2_node != NULL){
+            int val = l1_node->val + l2_node->val + carry;
+            if(val > 9){
+                carry = val / 10;
+                val = val%10;
+            } else {
+                carry = 0;
             }
-            break;
+            node->val = val;
+            node->next = NULL;
+            l3->next = node;
+            l3 = l3->next;
+            l1_node = l1_node->next;
+            l2_node = l2_node->next;
+        } else if(l1_node != NULL){
+            int val = l1_node->val + carry;
+            if(val > 9){
+                carry = val / 10;
+                val = val % 10;
+            } else {
+                carry = 0;
+            }
+            node->val = val;
+            node->next = NULL;
+            l3->next = node;
+            l3 = l3->next;
+            l1_node = l1_node->next;
+        } else if(l2_node != NULL){
+            int val = l2_node->val + carry;
+            if(val > 9){
+                carry = val / 10;
+                val = val % 10;
+            } else {
+                carry = 0;
+            }
+            node->val = val;
+            node->next = NULL;
+            l3->next = node;
+            l3 = l3->next;
+            l2_node = l2_node->next;
         }
 
-        number = number/2;
-        count2++;
-        free(num);
     }
 
-    return binary;
+    while(carry > 0){
+        struct ListNode *node = (struct ListNode*) malloc(sizeof(struct ListNode));
+        int temp = carry%10;
+        carry = carry/10;
+        node->val = temp;
+        node->next = NULL;
+        l3->next = node;
+        l3 = l3->next;
+    }
 
+    return head;
 }
- 
