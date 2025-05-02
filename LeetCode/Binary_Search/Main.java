@@ -1,46 +1,51 @@
-import java.util.ArrayList;
-import java.util.List;
-
-public class Main {
-
-    public static void main(String [] args) {
-        Solution sol = new Solution();
-
-        int[] nums = {0,1,1,2,2,4,5,7};
-        //int[] nums = {0,2,3,4,6,8,9};
-
-        System.out.println(sol.removeDuplicates(nums));
-
-
-    }
-}
-
 class Solution {
-    public int removeDuplicates(int[] nums) {
-        int current = 1;
-        int previous = 0;
+    public int searchInsert(int[] nums, int target) {
 
-        for(int i = 2; i < nums.length; i++){
+        int half = nums.length/2;
+        int index = 0;
 
-            //current and previous are same
-            if(nums[current] == nums[previous] && nums[i] == nums[current]){ 
-                //do nothing
+        if(nums[half] == target){
+            return half;
+        }
+
+        if(nums[half] > target){
+            for(int i = 0;i < half;i++){
+                if(i == 0 && nums[0] > target){
+                    index = 0;
+                    break;
+                }
+                if(nums[i] == target){
+                    index = i;
+                    break;
+                }
+
+                if(nums[i] > target){
+                    break;
+                }
+
+                index++;
             }
+        } else {
+            index = half;
+            for(int i = half;i < nums.length;i++){
+                if(i == half && nums[half] > target){
+                    break;
+                }
+                if(nums[i] == target){
+                    index = i;
+                    break;
+                }
+                if(nums[i] > target){
+                    break;
+                }
 
-            //current and previous are different
-            else {
-                previous = current;
-                current++;
-                nums[current] = nums[i];
+                index++;
             }
 
         }
 
-        current++; //actual amount
+        return index;
 
-        return current;
-
-        
         
     }
 }
