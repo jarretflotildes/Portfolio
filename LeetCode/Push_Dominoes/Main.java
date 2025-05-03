@@ -6,41 +6,51 @@ public class Main {
     public static void main(String [] args) {
         Solution sol = new Solution();
 
-        int[] nums = {0,1,1,2,2,4,5,7};
-        //int[] nums = {0,2,3,4,6,8,9};
-
-        System.out.println(sol.removeDuplicates(nums));
 
 
     }
 }
 
+
 class Solution {
-    public int removeDuplicates(int[] nums) {
-        int current = 1;
-        int previous = 0;
-
-        for(int i = 2; i < nums.length; i++){
-
-            //current and previous are same
-            if(nums[current] == nums[previous] && nums[i] == nums[current]){ 
-                //do nothing
+    public String pushDominoes(String dominoes) {
+        Queue<Integer> q = new LinkedList<>();
+        char[] dominoChars = dominoes.toCharArray();
+        
+        for(int i = 0; i < dominoes.length(); i++) {
+            if(dominoes.charAt(i) == 'L' || dominoes.charAt(i) == 'R') {
+                q.add(i);
             }
-
-            //current and previous are different
-            else {
-                previous = current;
-                current++;
-                nums[current] = nums[i];
-            }
-
         }
-
-        current++; //actual amount
-
-        return current;
-
         
+        while(!q.isEmpty()) {
+            char[] temp = dominoChars.clone(); 
+            
+            for(int i = 0; i < q.size(); i++) {
+                int pos = q.poll();
+                char c = dominoChars[pos];
+                
+                if(c == 'L') {
+                    if(pos > 0 && temp[pos-1] == '.') {
+                       
+                        if(pos == 1 || dominoChars[pos-2] != 'R') {
+                            temp[pos-1] = 'L';
+                            q.add(pos-1);
+                        }
+                    }
+                } 
+                else if(c == 'R') {
+                    if(pos < dominoes.length()-1 && temp[pos+1] == '.') {
+                        if(pos == dominoes.length()-2 || dominoChars[pos+2] != 'L') {
+                            temp[pos+1] = 'R';
+                            q.add(pos+1);
+                        }
+                    }
+                }
+            }
+            dominoChars = temp;
+        }
         
+        return new String(dominoChars);
     }
 }
