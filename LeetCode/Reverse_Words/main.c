@@ -3,105 +3,91 @@
 #include<stdbool.h>
 #include <string.h>
 
-bool canJump(int* nums, int numsSize);
-int canJumpHelper(int *nums,int numsSize,int currElem);
-void print_array(int *array,int length);
-
-bool canJumpGreed(int *nums,int numsSize);
 
 int main(int argc,char *args[]){
-    int array4[] = {2,5,0,0};
-    int array3[] = {2,3,1,1,4};
-    int array2[] = {1,2,3};
-    int array[] = {2,0,0};
-
-    int *pointer = array4;
-    int length = 4;
-    print_array(array4,length);
-//    bool can = canJump(pointer,length);
-    bool can = canJumpGreed(pointer,length);
-    printf("Can jump is %d\n",can);
 
     return 0;
 
 }
 
-bool canJump(int* nums, int numsSize){
-    
-    int currElem = 0;
-    int jump = 0;
-    bool help = canJumpHelper(nums,numsSize,currElem);
-    
-    return help;
+//Remove Leading Spaces and Trailing spaces in string
+char *removeStartEnd(char *s){
 
+    int left = 0;
+    int right = strlen(s)-1;
+    int prevRight = strlen(s)-1;
+
+    while(true){
+        if(s[left] != ' ' && s[right] != ' '){
+            break;
+        }
+
+        if(s[left] == ' '){
+            left++;
+        }
+
+        if(s[right] == ' '){
+            printf("HHlel\n");
+            right--;
+        }
+
+    }
+
+    s = s + left;           //Eliminate leading spaces
+    
+    if(prevRight != right){ //Eliminate trailing spaces
+        s[right] = '\0';
+    }
+
+    return s;
 }
 
-int canJumpHelper(int *nums,int numsSize,int currElem){
-    bool jump_possible = false;
+//Remove multiple spaces between words
+char *removeSpacePlus(char *s){
 
-    if(currElem >= numsSize){
-       return false;
-    }
+    char prev = 'a';
+    char *string 
     
-    //Reached 
-    if(currElem == numsSize-1){
-        return true;
-    }
-    
-    //can't move, but last elem can be 0 so check after reached
-    if(nums[currElem] == 0){
-       return false;
-    }
-
-    for(int i = 0;i<nums[currElem];i++){
-        
-        jump_possible = canJumpHelper(nums,numsSize,currElem+1+i);
-        if(jump_possible == true){
-            break;
+    for(int i = 0;i < strlen(s);i++){
+        if(prev = ' '){
+            prev = i-2; // -1 space before -1 actual letter == -2
+            i = i-2;
+            continue;
         }
+
+        prev = str[i];
+
     }
 
-    return jump_possible;
 
+    return s;
 }
 
-bool canJumpGreed(int *nums,int numsSize){
-
-    int position = 0;
-    bool canJump = false;
-
-    while(1){
-        int jump = nums[position];
-
-        while(jump > 0){
-           position = position + jump;
-
-           if(nums[position] == 0){
-                jump--;
-           } else {
-              break;
-           }
-        }
-
-        if(position >= numsSize-1){
-            canJump = true;
-            break;
-        }
-
-        if(position >= numsSize){
-            break;
-        }
-
-        if(jump == 0){
-            break;
-        }
-
-
+char* reverseWords(char* s) {
+    if(strlen(s) == 0){
+        return s;
     }
 
-    return canJump;
-}
+    s = removeStartEnd(s);
+    s = removeSpacePlus(s);
+/*
+    int right = strlen(s)-1;
 
+    for(int left = 0;left < strlen(s);left++){
+
+        if(left == right){
+            break;
+        }
+
+        char temp = s[left];
+        s[left] = s[right];
+        s[right] = temp;
+        right--;
+    }
+*/
+    return s;
+    
+}
 
 
 void print_array(int *array,int length){
