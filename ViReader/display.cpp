@@ -86,6 +86,7 @@ void initialize_screen(WindowManager *window){
 
 }
 
+//Count how many files in IMG folder then initialize all as backgrounds in vector
 void initialize_background(WindowManager *window){
    SDL_Surface *surface = IMG_Load("img/1.png");
 

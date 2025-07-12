@@ -73,6 +73,8 @@ void engine_driver(WindowManager *window){
                      case SDLK_RIGHT:
                      case SDLK_z:
                      case SDLK_x:
+                     case SDLK_UP:
+                     case SDLK_DOWN:
                      case SDLK_KP_ENTER:
                         if(display_getCurrentScreenIndex() == MAINSCREEN){ 
                            display_MainScreen_ScrollTextForward(window);
